@@ -12,6 +12,14 @@ const supaBase = createClient(
 function App() {
   const [session, setSession] = useState<Session | null>();
 
+  const handleSignOut = async () => {
+    try {
+      const { error } = await supaBase.auth.signOut();
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
+
   useEffect(() => {
     supaBase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
@@ -29,7 +37,12 @@ function App() {
   console.log(session);
 
   if (session) {
-    return <p>You are logged in</p>;
+    return (
+      <>
+        <p>You are logged in</p>
+        <p onClick={handleSignOut}>Sign out</p>
+      </>
+    );
   }
   return <Auth supabaseClient={supaBase} appearance={{ theme: ThemeSupa }} />;
 }
