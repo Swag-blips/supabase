@@ -21,9 +21,7 @@ export default function Auth() {
       const { data, error } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
-        // options: {
-        //   emailRedirectTo: "http://localhost:5173",
-        // },
+    
       });
 
       if (data) {
